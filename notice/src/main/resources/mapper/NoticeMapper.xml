@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsupport.notice.mapper.INoticeMapper">
+    
+    <select id="getNoticeList" resultType="com.rsupport.notice.vo.NoticeVO">
+	    select id, title, cntnt, author, read_cnt
+		  , date_format(reg_dt,'%Y-%m-%d %H:%i:%s') reg_dt
+		  , date_format(st_dt, '%Y-%m-%d %H:%i:%s') st_dt
+ 		  , date_format(ed_dt, '%Y-%m-%d %H:%i:%s') ed_dt
+		  , (select count(*) from tb_attach where notice_id = notice.id) attach_cnt
+		from tb_notice notice
+		where now() between st_dt and ed_dt
+		  and dbsts = 'A'
+		order by reg_dt desc
+    </select>
+    
+    <select id="getNoticeDetail" resultType="com.rsupport.notice.vo.NoticeVO" parameterType="String">
+    	select notice.id, title, cntnt, author, read_cnt
+		, date_format(notice.reg_dt,'%Y-%m-%d %H:%i:%s') reg_dt
+		, date_format(st_dt, '%Y-%m-%d %H:%i:%s') st_dt
+		, date_format(ed_dt, '%Y-%m-%d %H:%i:%s') ed_dt
+		, attach.id attach_id, original_nm
+		, date_format(attach.reg_dt,'%Y-%m-%d %H:%i:%s') attach_reg_dt
+		from tb_notice notice
+		inner join tb_attach attach on attach.notice_id = notice.id
+		where notice_id = #{id}
+    </select>
+    
+    <insert id="insertNotice" parameterType="com.rsupport.notice.vo.NoticeVO">
+    	insert into tb_notice (title, cntnt, author, st_dt, ed_dt)
+		values (#{title}, #{cntnt}, #{author}
+		, str_to_date(#{st_dt},'%Y%m%d%H%i%s'), str_to_date(#{ed_dt},'%Y%m%d%H%i%s'))
+    </insert>
+    
+    <update id="updateNotice" parameterType="com.rsupport.notice.vo.NoticeVO">
+    	update tb_notice
+    	set upd_dt = now()
+    	<if test="null != title and '' != title">
+    	, title = #{title}
+    	</if>
+    	<if test="null != cntnt and '' != cntnt">
+    	, cntnt = #{cntnt}
+    	</if>
+    	<if test="null != author and '' != author">
+    	, author = #{author}
+    	</if>
+    	<if test="null != st_dt and '' != st_dt">
+    	, st_dt = str_to_date(#{st_dt},'%Y%m%d%H%i%s')
+    	</if>
+    	<if test="null != ed_dt and '' != ed_dt">
+    	, ed_dt = str_to_date(#{ed_dt},'%Y%m%d%H%i%s')
+    	</if>
+    	<if test="null != dbsts and '' != dbsts">
+    	, dbsts = #{dbsts}
+    	</if>
+    	<if test="null != read_cnt and '' != read_cnt">
+    	, read_cnt = #{read_cnt}
+    	</if>
+    	where id = #{id}
+    </update>
+    
+</mapper>
