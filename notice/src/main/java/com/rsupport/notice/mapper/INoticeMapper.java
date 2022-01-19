@@ -2,6 +2,7 @@ package com.rsupport.notice.mapper;
 
 import java.util.ArrayList;
 
+import com.rsupport.notice.vo.AttachVO;
 import com.rsupport.notice.vo.NoticeVO;
 
 public interface INoticeMapper {
@@ -13,4 +14,6 @@ public interface INoticeMapper {
 	int updateNotice(NoticeVO vo);
 	// 공지사항 상세
 	ArrayList<NoticeVO> getNoticeDetail(String id);
+	// 첨부파일 등록
+	int insertAttach(AttachVO vo);
 }

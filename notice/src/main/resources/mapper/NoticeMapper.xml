@@ -28,7 +28,7 @@
 		where notice_id = #{id}
     </select>
     
-    <insert id="insertNotice" parameterType="com.rsupport.notice.vo.NoticeVO">
+    <insert id="insertNotice" parameterType="com.rsupport.notice.vo.NoticeVO" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     	insert into tb_notice (title, cntnt, author, st_dt, ed_dt)
 		values (#{title}, #{cntnt}, #{author}
 		, str_to_date(#{st_dt},'%Y%m%d%H%i%s'), str_to_date(#{ed_dt},'%Y%m%d%H%i%s'))
@@ -60,5 +60,10 @@
     	</if>
     	where id = #{id}
     </update>
+    
+    <insert id="insertAttach" parameterType="com.rsupport.notice.vo.AttachVO" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    	insert into tb_attach (notice_id, original_nm, save_nm, size)
+    	values (#{notice_id}, #{original_nm}, #{save_nm}, #{size})
+    </insert>
     
 </mapper>
