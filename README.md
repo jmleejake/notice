@@ -18,6 +18,7 @@ POST http://localhost:8080/notice/mani?id=11&dbsts=D
 ![image](https://user-images.githubusercontent.com/18359068/150551886-53df92c1-e5a5-4a5e-a948-bf3ed541a5f1.png)
 # 여러개 파일 포함 등록
 POST http://localhost:8080/notice/mani?title=파일있는 타이틀 제목&cntnt=파일있는 컨텐츠 내용내용 냉무아님&author=파일을 등록하는 작성자는 누구인가!&st_dt=20220122000000&ed_dt=20220122235959
+![image](https://user-images.githubusercontent.com/18359068/150554277-ad25d1ed-b7b7-4e6c-a59b-699d4324efd5.png)
 ![image](https://user-images.githubusercontent.com/18359068/150552467-1ab73588-6016-4e52-9c11-58abd2a085f3.png)
 
 위 테스트는 chrome-extension인 Talend API Tester로 진행했습니다.
