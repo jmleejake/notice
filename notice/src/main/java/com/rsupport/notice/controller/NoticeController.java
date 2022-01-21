@@ -21,19 +21,16 @@ public class NoticeController {
 	@Autowired
 	private INoticeService service;
 	
-	@ResponseBody
 	@GetMapping(value = "/list")
 	public ArrayList<NoticeVO> getNoticeList() {
 		return service.getNoticeList();
 	}
 	
-	@ResponseBody
 	@PostMapping(value = "/mani")
 	public ArrayList<NoticeVO> manipulateNotice(NoticeVO vo, MultipartFile[] files) {
 		return service.manipulateNotice(vo, files);
 	}
 	
-	@ResponseBody
 	@GetMapping(value = "/detail/{id}")
 	public ArrayList<NoticeVO> getNoticeDetail(@PathVariable String id) {
 		return service.getNoticeDetail(id);
